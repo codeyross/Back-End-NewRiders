@@ -1,6 +1,6 @@
 // https://www.geeksforgeeks.org/login-form-using-node-js-and-mongodb/
 // https://www.loginradius.com/blog/engineering/google-authentication-with-nodejs-and-passportjs/
-
+require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
 const methodOverride = require("method-override");
@@ -14,7 +14,8 @@ const bodyParser = require("body-parser");
 // const rateLimit = require("express-rate-limit");
 // const nodemailer = require("nodemailer");
 
-require("dotenv").config();
+
+
 /*
 app.use(
   require("express-session")({
@@ -35,19 +36,24 @@ app.set("port", process.env.PORT || 8001);
 // User = require("./models/user-model");
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+const dayController = require("./controllers/dayController");
+app.use("/:day", dayController);
+
 app.listen(app.get("port"), () => {
     console.log(`✅ PORT: ${app.get("port")} 🌟`);
   });
   
   app.get("/", (req, res) => {
    // res.redirect("/login");
+   res.send("Hello")
   });
 
 
 
 
 
-  
+
 // app.use(passport.initialize());
 // app.use(passport.session());
 
