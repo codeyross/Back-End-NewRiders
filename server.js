@@ -8,15 +8,15 @@ const methodOverride = require("method-override");
 const app = express();
 
 const mongoose = require("mongoose");
-// const passport = require("passport");
-// const LocalStrategy = require("passport-local").Strategy;
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 const bodyParser = require("body-parser");
-// const rateLimit = require("express-rate-limit");
-// const nodemailer = require("nodemailer");
+const rateLimit = require("express-rate-limit");
+const nodemailer = require("nodemailer");
 
 
 
-/*
+
 app.use(
   require("express-session")({
     secret: process.env.DEV_USER_SECRET,
@@ -24,7 +24,7 @@ app.use(
     saveUninitialized: true,
   })
 );
-*/
+
 app.use(cors());
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
@@ -33,35 +33,24 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set("port", process.env.PORT || 8001);
 
-// User = require("./models/user-model");
+User = require("./models/user-model");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const dayController = require("./controllers/dayController");
-app.use("/", dayController);
+
 
 app.listen(app.get("port"), () => {
     console.log(`✅ PORT: ${app.get("port")} 🌟`);
   });
   
-  app.get("/", (req, res) => {
-   // res.redirect("/login");
-   res.send("Hello")
-  });
+app.use(passport.initialize());
+app.use(passport.session());
 
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+ });
 
-
-
-
-
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// passport.use(new LocalStrategy(User.authenticate()));
-// passport.serializeUser(function (user, cb) {
-//  cb(null, user);
-// });
-/*
 passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
@@ -85,11 +74,6 @@ passport.use(
     }
   )
 );
-*/
-/*
-const customerController = require("./controllers/customerController.js");
-app.use("/customers", checkAuthentication, customerController);
-*/
 /*
 const loginlimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
@@ -97,6 +81,7 @@ const loginlimiter = rateLimit({
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
+*/
 
 function checkAuthentication(req, res, next) {
   if (req.isAuthenticated()) {
@@ -106,19 +91,15 @@ function checkAuthentication(req, res, next) {
   }
 }
 
-app.use("/login", loginlimiter);
-*/
+// app.use("/login", loginlimiter);
 
 
-
-
-/*
 app.get("/register", (req, res) => {
-  res.render("register", { layout: "register" });
+  res.send("register page");
 });
 
 app.get("/login", function (req, res) {
-  res.render("login", { layout: "login" });
+  res.send("login page");
 });
 
 app.post(
@@ -140,7 +121,7 @@ app.get(
   passport.authenticate("google", { failureRedirect: "/error" }),
   function (req, res) {
     // Successful authentication, redirect success.
-    res.redirect("/customers");
+    res.send("It worked for Google!");
   }
 );
 
@@ -154,14 +135,12 @@ app.post("/register", function (req, res) {
     function (err, user) {
       if (err) {
         console.log(err);
-        return res.render("confirmation", {
-          layout: "confirmation",
-          message: err,
-        });
+        return res.send("confirmation"
+        );
       }
 
       passport.authenticate("local")(req, res, function () {
-        res.render("login", { layout: "login" });
+        res.send("login page");
       });
     }
   );
@@ -169,19 +148,19 @@ app.post("/register", function (req, res) {
 
 app.get("/logout", function (req, res) {
   req.logout();
-  res.redirect("/");
+  res.send("logged out");
 });
 
 app.get("/confirmation", function (req, res) {
-  res.render("confirmation", { layout: "confirmation" });
+  res.send("confirmation page");
 });
 
 app.get("/forgot", function (req, res) {
-  res.render("forgot", { layout: "forgot" });
+  res.send("forgot page");
 });
 
 app.get("/reset", function (req, res) {
-  res.render("reset", { layout: "reset" });
+  res.send("reset page");
 });
 
 // source https://stackoverflow.com/questions/1497481/javascript-password-generator
@@ -216,7 +195,7 @@ app.post("/forgot", function (req, res) {
           var mailOptions = {
             from: process.env.DEV_EMAIL,
             to: sanitizedUser.email,
-            subject: "CRM Password Reset",
+            subject: "Password Reset",
             text: `Temp password: ${temp}`,
           };
 
@@ -274,4 +253,5 @@ app.post("/reset", function (req, res) {
   );
 });
 
-*/
+const dayController = require("./controllers/dayController");
+app.use("/", dayController);
