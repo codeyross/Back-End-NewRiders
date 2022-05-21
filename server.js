@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const dayController = require("./controllers/dayController");
-app.use("/:day", dayController);
+app.use("/", dayController);
 
 app.listen(app.get("port"), () => {
     console.log(`✅ PORT: ${app.get("port")} 🌟`);
