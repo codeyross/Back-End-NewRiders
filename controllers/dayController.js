@@ -26,6 +26,15 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
+router.get("/today", (req, res, next) => {
+  console.log()
+  let today = getTodaysDate()
+Day.find({date:today})
+  .then((day) => {
+      res.send(day);
+  })
+  .catch(next);
+});
 
 router.get("/:id", (req, res, next) => {
     Day.find({_id: req.params.id})
@@ -37,10 +46,11 @@ router.get("/:id", (req, res, next) => {
 
 
 router.post("/add", (req, res, next) => {
+  console.log(req.body)
   let date = getTodaysDate();
   console.log(date)
+
   req.body.date = `${date}`;
-  req.body.mood = "Vibin"
  // req.body.owner = req.user._id ? req.user._id : req.user.id;
  
  Day.find({date: req.body.date})
