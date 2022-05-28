@@ -18,7 +18,7 @@ function getTodaysDate() {
 }
 
 router.get("/", (req, res, next) => {
-    console.log(getTodaysDate())
+   // console.log(getTodaysDate())
   Day.find({})
     .then((day) => {
         res.send(day);
@@ -27,7 +27,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/today", (req, res, next) => {
-  console.log()
+  // console.log()
   let today = getTodaysDate()
 Day.find({date:today})
   .then((day) => {
@@ -39,10 +39,10 @@ Day.find({date:today})
 router.get("/date/:dates", (req, res, next) => {
   let date = req.params.dates
   date = date.replaceAll('-', '/')
-  console.log(date)
+  // console.log(date)
 Day.find({date:date})
   .then((day) => {
-      console.log(day)
+   //   console.log(day)
       res.send(day);
 
   })
@@ -59,7 +59,7 @@ router.get("/:id", (req, res, next) => {
 
 
 router.post("/add", (req, res, next) => {
-  console.log(req.body)
+ // console.log(req.body)
  // req.body.owner = req.user._id ? req.user._id : req.user.id;
  
  Day.find({date: req.body.date})
@@ -82,7 +82,7 @@ router.delete("/:dayid", (req, res, next) => {
  // let owner = req.user._id ? req.user._id : req.user.id;
 
  Day.findOneAndDelete({ _id: req.params.dayid}, (del) => {
-   console.log(del)
+   // console.log(del)
     res.send("deleted");
   }).catch(console.error);
 });

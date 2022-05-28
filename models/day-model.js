@@ -8,6 +8,7 @@ const daySchema = new mongoose.Schema({
   goalDoneYesteryday: {type: Boolean}
 });
 
+
 const Day = mongoose.model("Day", daySchema);
 
 module.exports = Day;
