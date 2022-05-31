@@ -83,13 +83,14 @@ router.delete("/:dayid", (req, res, next) => {
 
  Day.findOneAndDelete({ _id: req.params.dayid}, (del) => {
    // console.log(del)
-    res.send("deleted");
+    res.send(del);
   }).catch(console.error);
 });
 
 router.put("/:id", (req, res) => {
   Day.findOneAndUpdate(
     {
+
       _id: req.params.id,
      // owner: req.user._id ? req.user._id : req.user.id,
     },

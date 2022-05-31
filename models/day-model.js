@@ -5,7 +5,7 @@ const daySchema = new mongoose.Schema({
   date: { type: String, required: true },
   note: {type: String},
   goalForToday: {type: String},
-  goalDoneYesteryday: {type: Boolean}
+  goalDone: {type: Boolean}
 });
 
 
