@@ -13,20 +13,26 @@ const LocalStrategy = require("passport-local").Strategy;
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const nodemailer = require("nodemailer");
+const session = require("express-session")
+var cookieParser = require("cookie-parser")
 
 
 
 
 app.use(
-  require("express-session")({
+  session({
     secret: process.env.DEV_USER_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
+    cookie: {httpOnly:true},
+
   })
 );
 
-app.use(cors());
-app.use(methodOverride("_method"));
+
+app.use(cookieParser(process.env.DEV_USER_SECRET))
+
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -47,6 +53,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(function (user, cb) {
   cb(null, user);
  });
@@ -84,6 +91,8 @@ const loginlimiter = rateLimit({
 */
 
 function checkAuthentication(req, res, next) {
+  console.log(req.user)
+  console.log(req.isAuthenticated())
   if (req.isAuthenticated()) {
     next();
   } else {
@@ -105,11 +114,20 @@ app.get("/login", function (req, res) {
 app.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/customers",
-    failureRedirect: "/login",
+    successRedirect: "/",
+    failureRedirect: "/register"
   }),
-  function (req, res) {}
+  function (req, res) {
+  }
 );
+
+app.get("/checkAuthentication", (req, res) => {
+  const authenticated =  req.isAuthenticated()
+
+  res.status(200).json({
+    authenticated,
+  });
+});
 
 app.get(
   "/google",
@@ -254,4 +272,4 @@ app.post("/reset", function (req, res) {
 });
 
 const dayController = require("./controllers/dayController");
-app.use("/", dayController);
+app.use("/", checkAuthentication, dayController);
