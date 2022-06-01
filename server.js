@@ -111,6 +111,10 @@ app.get("/login", function (req, res) {
   res.send("login page");
 });
 
+app.get("/user", function (req, res) {
+  res.send(req.user);
+});
+
 app.post(
   "/login",
   passport.authenticate("local", {

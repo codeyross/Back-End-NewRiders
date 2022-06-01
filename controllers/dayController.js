@@ -19,7 +19,7 @@ function getTodaysDate() {
 
 router.get("/", (req, res, next) => {
    // console.log(getTodaysDate())
-  Day.find({})
+  Day.find({user:req.user._id})
     .then((day) => {
         res.send(day);
     })
@@ -27,9 +27,9 @@ router.get("/", (req, res, next) => {
 });
 
 router.get("/today", (req, res, next) => {
-  // console.log()
+  console.log(req.user._id)
   let today = getTodaysDate()
-Day.find({date:today})
+Day.find({date:today,user:req.user._id})
   .then((day) => {
       res.send(day);
   })
@@ -40,7 +40,7 @@ router.get("/date/:dates", (req, res, next) => {
   let date = req.params.dates
   date = date.replaceAll('-', '/')
   // console.log(date)
-Day.find({date:date})
+Day.find({date:date,user:req.user._id})
   .then((day) => {
    //   console.log(day)
       res.send(day);
@@ -50,7 +50,7 @@ Day.find({date:date})
 });
 
 router.get("/:id", (req, res, next) => {
-    Day.find({_id: req.params.id})
+    Day.find({_id: req.params.id,user:req.user._id})
     .then((day) => {
         res.send(day);
     })
@@ -62,7 +62,7 @@ router.post("/add", (req, res, next) => {
  // console.log(req.body)
  // req.body.owner = req.user._id ? req.user._id : req.user.id;
  
- Day.find({date: req.body.date})
+ Day.find({date: req.body.date,user:req.user._id})
     .then((day) => {
         if(day.length >0){
             res.send("Already Exists")
@@ -92,6 +92,7 @@ router.put("/:id", (req, res) => {
     {
 
       _id: req.params.id,
+      user:req.user._id
      // owner: req.user._id ? req.user._id : req.user.id,
     },
     req.body,
