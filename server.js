@@ -168,9 +168,11 @@ app.post("/register", function (req, res) {
   );
 });
 
-app.get("/logout", function (req, res) {
-  req.logout();
-  res.send("logged out");
+app.get('/logout', function(req, res, next) {
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/login');
+  });
 });
 
 app.get("/confirmation", function (req, res) {
@@ -180,6 +182,7 @@ app.get("/confirmation", function (req, res) {
 app.get("/forgot", function (req, res) {
   res.send("forgot page");
 });
+
 
 app.get("/reset", function (req, res) {
   res.send("reset page");
