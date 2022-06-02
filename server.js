@@ -277,6 +277,7 @@ app.post("/forgotuser", function (req, res, next) {
 .catch(next);
 });
 
+
 app.post("/reset", function (req, res) {
   User.findByUsername(req.body.username).then(
     function (sanitizedUser) {
@@ -287,17 +288,12 @@ app.post("/reset", function (req, res) {
           function () {
             sanitizedUser.save();
 
-            res.render("confirmation", {
-              layout: "confirmation",
-              message: "Password Reset!",
-            });
+            res.send("Password Reset!")
+          
           }
         );
       } else {
-        res.render("confirmation", {
-          layout: "confirmation",
-          message: "This user does not exist!",
-        });
+        res.render("This user does not exist!")
       }
     },
     function (err) {
