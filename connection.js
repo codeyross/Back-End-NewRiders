@@ -1,13 +1,6 @@
 const mongoose = require("mongoose");
 require('dotenv').config()
-const mongoURI = 
-
-  //check if the node environment is production
-  process.env.NODE_ENV === "production"
-    ? //if so, use DB_URL as the database location
-      process.env.DB_URL
-    : //if not, use the book-e db on the MongoDB's local server
-      process.env.DEV_DB_URL;
+const mongoURI =  process.env.DEV_DB_URL;
 
 mongoose
   .connect(mongoURI)
