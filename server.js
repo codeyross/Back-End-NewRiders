@@ -231,16 +231,10 @@ app.post("/forgot", function (req, res) {
               console.log("Email sent: " + info.response);
             }
           });
-          res.render("confirmation", {
-            layout: "confirmation",
-            message: "Temporary Password Sent",
-          });
+          res.send("Temporary Password Sent");
         });
       } else {
-        res.render("confirmation", {
-          layout: "confirmation",
-          message: "This user does not exist!",
-        });
+        res.render("This user does not exist!");
       }
     },
     function (err) {

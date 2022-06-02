@@ -10,6 +10,7 @@ const daySchema = new mongoose.Schema({
 });
 
 
+
 const Day = mongoose.model("Day", daySchema);
 
 module.exports = Day;
