@@ -17,26 +17,25 @@ const sessions = require("express-session")
 var cookieParser = require("cookie-parser")
 
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cors({
+    origin : "http://localhost:3000/",
+    credentials: true
+}))
 
-
-app.use(
-  session({
-    secret: process.env.DEV_USER_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: {httpOnly:false},
-
-  })
-);
-
-
-app.use(cookieParser(process.env.DEV_USER_SECRET))
-
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(function(req, res, next) {
+    res.header({
+        "Access-Control-Allow-Origin": "http://localhost:3000/",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, *"
+    });
+    next();
+});
+app.use(cookieParser())
 
 app.use(express.static(__dirname));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 app.set("port", process.env.PORT || 8001);
 
