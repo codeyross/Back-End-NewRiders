@@ -17,25 +17,28 @@ const session = require("express-session")
 var cookieParser = require("cookie-parser")
 
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cors({
+    origin : process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_FRONT_END_PROD
+    : process.env.REACT_APP_FRONT_END_DEV,
+    credentials: true
+}))
+app.use(function(req, res, next) {
+    res.header({
+        "Access-Control-Allow-Origin": process.env.NODE_ENV === 'production'
+            ? process.env.REACT_APP_FRONT_END_PROD
+            : process.env.REACT_APP_FRONT_END_DEV,
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+        "Access-Control-Allow-Headers": "Content-Type, *"
+    });
+    next();
+});
+app.use(cookieParser())
 
-app.use(
-  session({
-    secret: process.env.DEV_USER_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: {httpOnly:false},
-
-  })
-);
-
-
-app.use(cookieParser(process.env.DEV_USER_SECRET))
-
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.static("public"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 app.set("port", process.env.PORT || 8001);
 
 User = require("./models/user-model");
