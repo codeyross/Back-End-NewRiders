@@ -22,7 +22,11 @@ const expressSession = require("express-session");
 app.use(sessions({
   secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
   saveUninitialized:true,
-  cookie: {},
+  cookie: {
+    httpOnly: true,
+    /*TODO: Fix for chrome*/
+    sameSite: 'none',
+  },
   resave: false 
 }));
 
