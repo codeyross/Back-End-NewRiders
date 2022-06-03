@@ -3,15 +3,13 @@
 require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
-const methodOverride = require("method-override");
 
 const app = express();
 
 const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const bodyParser = require("body-parser");
-const rateLimit = require("express-rate-limit");
+
 const nodemailer = require("nodemailer");
 const session = require("express-session")
 var cookieParser = require("cookie-parser")
@@ -38,11 +36,9 @@ app.use(function(req, res, next) {
 });
 app.use(cookieParser())
 
-app.use(express.static("public"));
 app.set("port", process.env.PORT || 8001);
 
 User = require("./models/user-model");
-app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
@@ -64,25 +60,9 @@ passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 
-const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
-const GOOGLE_CLIENT_ID = process.env.CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = process.env.CLIENT_SEC;
 
 var userProfile;
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.CLIENT_REDIRECT,
-    },
-    function (accessToken, refreshToken, profile, done) {
-      userProfile = profile;
-      return done(null, userProfile);
-    }
-  )
-);
 /*
 const loginlimiter = rateLimit({
   windowMs: 10 * 60 * 1000, // 10 minutes
