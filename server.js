@@ -306,4 +306,4 @@ app.post("/reset", function (req, res) {
 });
 
 const dayController = require("./controllers/dayController");
-app.use("/", checkAuthentication, dayController);
+app.use("/",  passport.authenticate('local'), dayController);
