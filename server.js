@@ -24,9 +24,9 @@ app.use(
     resave: true,
     saveUninitialized: false,
     httpOnly:true,
-    secure:true, 
+   
     
-    cookie: {httpOnly:false,sameSite:'none'},
+    cookie: {  secure:true, httpOnly:false,sameSite:'none'},
     proxy: true,
 
   })
