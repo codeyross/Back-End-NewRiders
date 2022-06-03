@@ -30,8 +30,8 @@ app.use(
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
+app.use(cors({credentials: true, origin: true}));
 
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
