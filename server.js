@@ -13,17 +13,21 @@ const LocalStrategy = require("passport-local").Strategy;
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const nodemailer = require("nodemailer");
-const session = require("express-session")
+const sessions = require("express-session")
 var cookieParser = require("cookie-parser")
 
 
 const expressSession = require("express-session");
 
+app.use(sessions({
+  secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+  saveUninitialized:true,
+  cookie: {},
+  resave: false 
+}));
 
-app.use(expressSession(session));
 
-
-app.use(cookieParser(process.env.DEV_USER_SECRET))
+app.use(cookieParser())
 
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.static("public"));
