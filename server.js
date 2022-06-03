@@ -17,17 +17,16 @@ const sessions = require("express-session")
 var cookieParser = require("cookie-parser")
 
 
-const expressSession = require("express-session");
 
 app.use(sessions({
-  secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-  saveUninitialized:true,
   cookie: {
     secure: true,
     httpOnly: true,
     /*TODO: Fix for chrome*/
     sameSite: 'none',
   },
+  secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+  saveUninitialized:false,
   resave: false 
 }));
 
