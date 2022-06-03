@@ -18,16 +18,12 @@ var cookieParser = require("cookie-parser")
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin : process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_FRONT_END_PROD
-    : process.env.REACT_APP_FRONT_END_DEV,
+    origin : "http://localhost:3000/",
     credentials: true
 }))
 app.use(function(req, res, next) {
     res.header({
-        "Access-Control-Allow-Origin": process.env.NODE_ENV === 'production'
-            ? process.env.REACT_APP_FRONT_END_PROD
-            : process.env.REACT_APP_FRONT_END_DEV,
+        "Access-Control-Allow-Origin": "http://localhost:3000/",
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
         "Access-Control-Allow-Headers": "Content-Type, *"
