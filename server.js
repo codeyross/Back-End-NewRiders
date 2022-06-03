@@ -23,7 +23,7 @@ app.use(
     resave: true,
     saveUninitialized: true,
     cookie: {httpOnly:false,
-    sameSite:"none"},
+    sameSite:"strict"},
 
   })
 );
