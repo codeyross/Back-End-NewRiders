@@ -32,6 +32,12 @@ app.use(function(req, res, next) {
 });
 app.use(cookieParser())
 
+app.use(session({
+  secret: '2C44-4D44-WppQ38S',
+  resave: true,
+  saveUninitialized: true
+}));
+
 app.set("port", process.env.PORT || 8001);
 
 User = require("./models/user-model");
