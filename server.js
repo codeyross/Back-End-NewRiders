@@ -23,6 +23,7 @@ app.use(sessions({
   secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
   saveUninitialized:true,
   cookie: {
+    secure: true,
     httpOnly: true,
     /*TODO: Fix for chrome*/
     sameSite: 'none',
