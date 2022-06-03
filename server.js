@@ -34,7 +34,7 @@ app.use(
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
-app.use(cors({credentials: true, origin: "http://localhost:3000"}));
+app.use(cors({credentials: true, origin: "https://629a3bf2a31f100074a92357--beautiful-flan-a62c11.netlify.app"}));
 
 app.use(express.static("public"));
 app.use(express.json());
