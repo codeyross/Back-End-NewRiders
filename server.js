@@ -17,10 +17,7 @@ var cookieParser = require("cookie-parser")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors({
-    origin : "http://localhost:3000",
-    credentials: true
-}))
+app.use(cors({credentials: true, origin: true}));
 app.use(function(req, res, next) {
     res.header({
         "Access-Control-Allow-Origin": "http://localhost:3000",
@@ -110,6 +107,7 @@ app.post(
 );
 
 app.get("/checkAuthentication", (req, res) => {
+  console.log(req)
   const authenticated =  req.isAuthenticated()
 
   res.status(200).json({
