@@ -1,5 +1,6 @@
 // https://www.geeksforgeeks.org/login-form-using-node-js-and-mongodb/
 // https://www.loginradius.com/blog/engineering/google-authentication-with-nodejs-and-passportjs/
+require('dotenv').config()
 const express = require("express");
 const cors = require("cors");
 const methodOverride = require("method-override");
@@ -15,21 +16,24 @@ const nodemailer = require("nodemailer");
 const session = require("express-session")
 var cookieParser = require("cookie-parser")
 
-
+app.set("trust proxy", 1);
 
 app.use(
   session({
-    secret: "jq23423kbkbsrkbg24t8gh8wb4rbgw",
+    secret: process.env.DEV_USER_SECRET,
     resave: true,
     saveUninitialized: true,
-    cookie: {httpOnly:false,
-    sameSite:"strict"},
+    httpOnly:true,
+    secure:true, 
+    
+    cookie: {httpOnly:false,sameSite:'none'},
+    proxy: true,
 
   })
 );
 
 
-app.use(cookieParser())
+app.use(cookieParser(process.env.DEV_USER_SECRET))
 app.use(cors({credentials: true, origin: true}));
 
 app.use(express.static("public"));
