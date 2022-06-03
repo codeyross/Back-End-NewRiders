@@ -18,20 +18,19 @@ var cookieParser = require("cookie-parser")
 
 
 
-app.use(sessions({
-  cookie: {
-    secure: true,
-    httpOnly: true,
-    /*TODO: Fix for chrome*/
-    sameSite: 'none',
-  },
-  secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-  saveUninitialized:false,
-  resave: false 
-}));
+
+app.use(
+  session({
+    secret: process.env.DEV_USER_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: {httpOnly:false},
+
+  })
+);
 
 
-app.use(cookieParser())
+app.use(cookieParser(process.env.DEV_USER_SECRET))
 
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
