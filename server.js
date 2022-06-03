@@ -171,11 +171,9 @@ app.post("/register", function (req, res) {
   );
 });
 
-app.get('/logout', function(req, res, next) {
-  req.logout(function(err) {
-    if (err) { return next(err); }
-    res.redirect('/login');
-  });
+app.get("/logout", function (req, res) {
+  req.logout();
+  res.redirect("/");
 });
 
 app.get("/confirmation", function (req, res) {
