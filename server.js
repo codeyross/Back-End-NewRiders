@@ -16,22 +16,26 @@ const nodemailer = require("nodemailer");
 const session = require("express-session")
 var cookieParser = require("cookie-parser")
 
-
+app.set("trust proxy", 1);
 
 app.use(
   session({
     secret: process.env.DEV_USER_SECRET,
     resave: true,
-    saveUninitialized: true,
-    cookie: {httpOnly:false},
+    saveUninitialized: false,
+    httpOnly:true,
+   
+    
+    cookie: {  secure:true, httpOnly:false,sameSite:'none'},
+    proxy: true,
 
   })
 );
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
+app.use(cors({credentials: true, origin: "https://629a4fdabf36bd005e34c4ab--coruscating-fenglisu-48cde3.netlify.app"}));
 
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
