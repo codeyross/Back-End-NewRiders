@@ -17,16 +17,10 @@ const session = require("express-session")
 var cookieParser = require("cookie-parser")
 
 
+const expressSession = require("express-session");
 
-app.use(
-  session({
-    secret: process.env.DEV_USER_SECRET,
-    resave: true,
-    saveUninitialized: true,
-    
 
-  })
-);
+app.use(expressSession(session));
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
