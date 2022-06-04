@@ -34,7 +34,7 @@ app.use(
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
-app.use(cors({credentials: true, origin: "https://symphonious-gumdrop-992391.netlify.app/"}));
+app.use(cors({credentials: true, origin: "https://symphonious-gumdrop-992391.netlify.app"}));
 
 app.use(express.static("public"));
 app.use(express.json());
