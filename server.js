@@ -37,8 +37,7 @@ app.use(cookieParser(process.env.DEV_USER_SECRET))
 app.use(
   cors({
     credentials: true,
-    origin:
-      "https://629a4fdabf36bd005e34c4ab--coruscating-fenglisu-48cde3.netlify.app",
+    origin: "https://symphonious-gumdrop-992391.netlify.app/",
   })
 );
 
