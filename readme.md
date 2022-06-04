@@ -34,7 +34,7 @@ Express.js, Node.js, MongoDB, Mongoose, Passport.
 ## Features to Improve in Future
 - Mood color customizer 
 - TAP list tracker per user.
-- Journal entires
+- Journal entries
 
 # Our Team
 - Bradley Hazel
