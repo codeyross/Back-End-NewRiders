@@ -34,7 +34,7 @@ app.use(
 
 
 app.use(cookieParser(process.env.DEV_USER_SECRET))
-app.use(cors({credentials: true, origin: "https://629b50ecac0b816a6fa5a29f--courageous-pony-ba2805.netlify.app"}));
+app.use(cors({credentials: true, origin: "https://629b541c5e716772cfa07954--jazzy-beijinho-104da0.netlify.app"}));
 
 app.use(express.static("public"));
 app.use(express.json());
